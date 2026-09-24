@@ -1,3 +1,4 @@
+import Ejercicio7.Contador;
 import Ejercicio1.HiloContador;
 import Ejercicio1.HiloSaludador;
 import Ejercicio2.Hilo1;
@@ -10,10 +11,18 @@ import Ejercicio4.SumaPares;
 import Ejercicio4.Tabla5;
 import Ejercicio5.CalcArray;
 import Ejercicio5.CrearArray;
+import Ejercicio6.Atletas;
+import Ejercicio6.Carrera;
+import Ejercicio7.Contador;
 import Prueba1.Hiloletras;
 import Prueba1.Hilonumeros;
 
-void main() throws InterruptedException {
+static void main(String[] args) {
+    public static int contador = 0;
+
+    public void main throws InterruptedException {
+
+
    /*
    //prueba
    Hiloletras hl = new Hiloletras();
@@ -93,6 +102,7 @@ void main() throws InterruptedException {
     System.out.println("Fin hilo3");
     System.out.println("Fin de los hilos");*/
 
+    /*
     //ejer5
     CrearArray crearArray = new CrearArray();
     Thread hiloCrear = new Thread(crearArray);
@@ -121,15 +131,59 @@ void main() throws InterruptedException {
     hilo3.join();
     hilo4.join();
 
-    int sumaTotal = calc1.getSuma()
-            + calc2.getSuma()
-            + calc3.getSuma()
-            + calc4.getSuma();
+    int sumaTotal = calc1.getSuma() + calc2.getSuma() + calc3.getSuma() + calc4.getSuma();
 
     double media = (double) sumaTotal / array.length;
 
+    System.out.println("Suma1: " + calc1.getSuma());
+    System.out.println("Suma2: " + calc2.getSuma());
+    System.out.println("Suma3: " + calc3.getSuma());
+    System.out.println("Suma4: " + calc4.getSuma());
     System.out.println("Suma total: " + sumaTotal);
-    System.out.println("Media: " + media);
+    System.out.println("Media: " + media);*/
+
+    /*
+    //ejer6
+    Carrera miCarrera = new Carrera();
+    Thread hiloCarrera = new Thread(miCarrera);
+
+    hiloCarrera.start();
+
+    Atletas miAtleta = new Atletas();
+    Thread hilo1 = new Thread(miAtleta, "Arnau");
+    Atletas miAtleta2 = new Atletas();
+    Thread hilo2 = new Thread(miAtleta2, "Laura");
+    Atletas miAtleta3 = new Atletas();
+    Thread hilo3 = new Thread(miAtleta3, "Alberto");
+
+    hilo1.start();
+    hilo2.start();
+    hilo3.start();
+
+    hilo1.join();
+    hilo2.join();
+    hilo3.join();
+    System.out.println("La carrera ha terminado");*/
+
+        //ejer7
+
+       Contador miContador = new Contador();
+       Thread hiloContador = new Thread(miContador, "contador1");
+       Thread hiloContador2 = new Thread(miContador, "contador2");
+       Thread hiloContador3 = new Thread(miContador, "contador3");
+       Thread hiloContador4 = new Thread(miContador, "contador4");
+
+       hiloContador.start();
+       hiloContador2.start();
+       hiloContador3.start();
+       hiloContador4.start();
+       hiloContador.join();
+       hiloContador2.join();
+       hiloContador3.join();
+       hiloContador4.join();
+
+       System.out.println("Suma total: " + Contador.getContador());
+
+
+    }
 }
-
-
