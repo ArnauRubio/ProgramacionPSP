@@ -8,6 +8,8 @@ import Ejercicio3.Pares;
 import Ejercicio4.Ciudades;
 import Ejercicio4.SumaPares;
 import Ejercicio4.Tabla5;
+import Ejercicio5.CalcArray;
+import Ejercicio5.CrearArray;
 import Prueba1.Hiloletras;
 import Prueba1.Hilonumeros;
 
@@ -91,4 +93,43 @@ void main() throws InterruptedException {
     System.out.println("Fin hilo3");
     System.out.println("Fin de los hilos");*/
 
+    //ejer5
+    CrearArray crearArray = new CrearArray();
+    Thread hiloCrear = new Thread(crearArray);
+
+    hiloCrear.start();
+    hiloCrear.join();
+    int[] array = crearArray.getArray();
+
+    CalcArray calc1 = new CalcArray(array, 0, 500);
+    CalcArray calc2 = new CalcArray(array, 500, 1000);
+    CalcArray calc3 = new CalcArray(array, 1000, 1500);
+    CalcArray calc4 = new CalcArray(array, 1500, 2000);
+
+    Thread hilo1 = new Thread(calc1);
+    Thread hilo2 = new Thread(calc2);
+    Thread hilo3 = new Thread(calc3);
+    Thread hilo4 = new Thread(calc4);
+
+    hilo1.start();
+    hilo2.start();
+    hilo3.start();
+    hilo4.start();
+
+    hilo1.join();
+    hilo2.join();
+    hilo3.join();
+    hilo4.join();
+
+    int sumaTotal = calc1.getSuma()
+            + calc2.getSuma()
+            + calc3.getSuma()
+            + calc4.getSuma();
+
+    double media = (double) sumaTotal / array.length;
+
+    System.out.println("Suma total: " + sumaTotal);
+    System.out.println("Media: " + media);
 }
+
+
