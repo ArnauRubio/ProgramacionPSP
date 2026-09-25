@@ -1,4 +1,4 @@
-package Ejercicio2;
+package Multihilos.Ejercicio2;
 
 public class Hilo2 implements Runnable {
     @Override

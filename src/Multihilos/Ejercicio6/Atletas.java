@@ -1,4 +1,4 @@
-package Ejercicio6;
+package Multihilos.Ejercicio6;
 
 public class Atletas implements Runnable{
     String nombre;

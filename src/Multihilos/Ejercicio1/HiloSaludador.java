@@ -1,4 +1,4 @@
-package Ejercicio1;
+package Multihilos.Ejercicio1;
 
 public class HiloSaludador extends Thread{
     public void run() {
