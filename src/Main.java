@@ -1,27 +1,12 @@
-import Ejercicio7.Contador;
-import Ejercicio1.HiloContador;
-import Ejercicio1.HiloSaludador;
-import Ejercicio2.Hilo1;
-import Ejercicio2.Hilo2;
-import Ejercicio2.Hilo3;
-import Ejercicio3.Impares;
-import Ejercicio3.Pares;
-import Ejercicio4.Ciudades;
-import Ejercicio4.SumaPares;
-import Ejercicio4.Tabla5;
-import Ejercicio5.CalcArray;
-import Ejercicio5.CrearArray;
-import Ejercicio6.Atletas;
-import Ejercicio6.Carrera;
-import Ejercicio7.Contador;
-import Prueba1.Hiloletras;
-import Prueba1.Hilonumeros;
+import Multihilos.Ejercicio7.Contador;
+import Multihilos.Ejercicio7.Control;
+import Sync1.ControlCuenta;
+import Sync1.CuentaBancaria;
+import Sync2.Almacen;
+import Sync2.Carga;
+import Sync2.Empaquetado;
 
-static void main(String[] args) {
-    public static int contador = 0;
-
-    public void main throws InterruptedException {
-
+static void main(String[] args) throws InterruptedException {
 
    /*
    //prueba
@@ -165,25 +150,118 @@ static void main(String[] args) {
     hilo3.join();
     System.out.println("La carrera ha terminado");*/
 
-        //ejer7
+    /*
+    //ejer7
+    Control compartido = new Control();
 
-       Contador miContador = new Contador();
-       Thread hiloContador = new Thread(miContador, "contador1");
-       Thread hiloContador2 = new Thread(miContador, "contador2");
-       Thread hiloContador3 = new Thread(miContador, "contador3");
-       Thread hiloContador4 = new Thread(miContador, "contador4");
+    Contador miContador = new Contador(compartido);
+    Contador miContador2 = new Contador(compartido);
+    Contador miContador3 = new Contador(compartido);
+    Contador miContador4 = new Contador(compartido);
 
-       hiloContador.start();
-       hiloContador2.start();
-       hiloContador3.start();
-       hiloContador4.start();
-       hiloContador.join();
-       hiloContador2.join();
-       hiloContador3.join();
-       hiloContador4.join();
+    Thread hiloContador = new Thread(miContador, "contador1");
+    Thread hiloContador2 = new Thread(miContador2, "contador2");
+    Thread hiloContador3 = new Thread(miContador3, "contador3");
+    Thread hiloContador4 = new Thread(miContador4, "contador4");
 
-       System.out.println("Suma total: " + Contador.getContador());
+    hiloContador.start();
+    hiloContador2.start();
+    hiloContador3.start();
+    hiloContador4.start();
+    hiloContador.join();
+    hiloContador2.join();
+    hiloContador3.join();
+    hiloContador4.join();
 
+    System.out.println("Suma total: " + compartido);*/
 
-    }
+    /*
+    //sync1
+    CuentaBancaria nCuenta = new CuentaBancaria();
+    nCuenta.retirar();
+    CuentaBancaria nCuenta2 = new CuentaBancaria();
+    nCuenta2.ingresar();
+
+    Thread miHilo1 = new Thread(nCuenta);
+    Thread miHilo2 = new Thread(nCuenta2);
+
+    miHilo1.start();
+    miHilo2.start();
+
+    miHilo1.join();
+    miHilo2.join();*/
+
+    //sync2
+    Almacen amazon = new Almacen();
+
+    Carga miCarga1 = new Carga(amazon, "Amazon");
+    Thread miHilo1 = new Thread(miCarga1, "Hilo1");
+    Carga miCarga2 = new Carga(amazon, "Amazon");
+    Thread miHilo2 = new Thread(miCarga2, "Hilo2");
+    Carga miCarga3 = new Carga(amazon, "Amazon");
+    Thread miHilo3 = new Thread(miCarga3, "Hilo3");
+    Carga miCarga4 = new Carga(amazon, "Amazon");
+    Thread miHilo4 = new Thread(miCarga4, "Hilo4");
+    Carga miCarga5 = new Carga(amazon, "Amazon");
+    Thread miHilo5 = new Thread(miCarga5, "Hilo5");
+    Carga miCarga6 = new Carga(amazon, "Amazon");
+    Thread miHilo6 = new Thread(miCarga6, "Hilo6");
+    Carga miCarga7 = new Carga(amazon, "Amazon");
+    Thread miHilo7 = new Thread(miCarga7, "Hilo7");
+    Carga miCarga8 = new Carga(amazon, "Amazon");
+    Thread miHilo8 = new Thread(miCarga8, "Hilo8");
+
+    Empaquetado miEmpaquetado1 = new Empaquetado(amazon, "Amazon");
+    Thread miHilo9 = new Thread(miEmpaquetado1, "Hilo9");
+    Empaquetado miEmpaquetado2 = new Empaquetado(amazon, "Amazon");
+    Thread miHilo10 = new Thread(miEmpaquetado2, "Hilo10");
+    Empaquetado miEmpaquetado3 = new Empaquetado(amazon, "Amazon");
+    Thread miHilo11 = new Thread(miEmpaquetado3, "Hilo11");
+    Empaquetado miEmpaquetado4 = new Empaquetado(amazon, "Amazon");
+    Thread miHilo12 = new Thread(miEmpaquetado4, "Hilo12");
+    Empaquetado miEmpaquetado5 = new Empaquetado(amazon, "Amazon");
+    Thread miHilo13 = new Thread(miEmpaquetado5, "Hilo13");
+    Empaquetado miEmpaquetado6 = new Empaquetado(amazon, "Amazon");
+    Thread miHilo14 = new Thread(miEmpaquetado6, "Hilo14");
+    Empaquetado miEmpaquetado7 = new Empaquetado(amazon, "Amazon");
+    Thread miHilo15 = new Thread(miEmpaquetado7, "Hilo15");
+    Empaquetado miEmpaquetado8 = new Empaquetado(amazon, "Amazon");
+    Thread miHilo16 = new Thread(miEmpaquetado8, "Hilo16");
+
+    miHilo1.start();
+    miHilo2.start();
+    miHilo3.start();
+    miHilo4.start();
+    miHilo5.start();
+    miHilo6.start();
+    miHilo7.start();
+    miHilo8.start();
+
+    miHilo9.start();
+    miHilo10.start();
+    miHilo11.start();
+    miHilo12.start();
+    miHilo13.start();
+    miHilo14.start();
+    miHilo15.start();
+    miHilo16.start();
+
+    miHilo1.join();
+    miHilo2.join();
+    miHilo3.join();
+    miHilo4.join();
+    miHilo5.join();
+    miHilo6.join();
+    miHilo7.join();
+    miHilo8.join();
+    miHilo9.join();
+    miHilo10.join();
+    miHilo11.join();
+    miHilo12.join();
+    miHilo13.join();
+    miHilo14.join();
+    miHilo15.join();
+    miHilo16.join();
+    System.out.println("Las unidades totales son: " + amazon.getUnidades());
+
 }

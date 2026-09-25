@@ -1,4 +1,4 @@
-package Ejercicio5;
+package Multihilos.Ejercicio5;
 
 public class CalcArray implements Runnable {
     private int[] n;

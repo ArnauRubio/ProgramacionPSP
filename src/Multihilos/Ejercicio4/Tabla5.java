@@ -1,4 +1,4 @@
-package Ejercicio4;
+package Multihilos.Ejercicio4;
 
 public class Tabla5 implements Runnable{
     @Override

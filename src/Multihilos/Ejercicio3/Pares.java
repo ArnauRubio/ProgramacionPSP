@@ -1,4 +1,4 @@
-package Ejercicio3;
+package Multihilos.Ejercicio3;
 
 public class Pares implements Runnable {
     @Override

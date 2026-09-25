@@ -1,6 +1,4 @@
-package Ejercicio6;
-
-import java.util.Random;
+package Multihilos.Ejercicio6;
 
 import static java.lang.Math.random;
 

@@ -1,9 +1,9 @@
-package Ejercicio2;
+package Multihilos.Ejercicio2;
 
-public class Hilo1 implements Runnable {
+public class Hilo3 implements Runnable{
     @Override
     public void run() {
-        for (char i = 'A'; i < 'Z'; i++) {
+        for (int i = 1; i <= 50; i++) {
             System.out.println(i);
             System.out.println(Thread.currentThread().getState());
         }
