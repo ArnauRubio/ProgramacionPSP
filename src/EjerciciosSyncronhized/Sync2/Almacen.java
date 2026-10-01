@@ -1,4 +1,4 @@
-package Sync2;
+package EjerciciosSyncronhized.Sync2;
 
 public class Almacen {
     String nombre;
@@ -11,9 +11,6 @@ public class Almacen {
     }
 
     public synchronized void empaquetar(int cantidad) throws InterruptedException {
-       /* for (int i = 0; i <= 500; i++) {
-            this.unidades -= cantidad;
-        }*/
         while (this.unidades < cantidad) {
             System.out.println("Hilo sin stock!!!!!!");
             wait();

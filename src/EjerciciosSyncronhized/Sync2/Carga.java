@@ -1,4 +1,4 @@
-package Sync2;
+package EjerciciosSyncronhized.Sync2;
 
 public class Carga implements Runnable{
     private Almacen almacen;

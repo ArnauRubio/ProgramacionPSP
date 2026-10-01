@@ -1,9 +1,9 @@
-package Sync1;
+package EjerciciosMonitores.ejerMonitor2;
 
-public class ControlCuenta {
-   private CuentaBancaria cuenta;
+public class CuentaMonitor {
+    private AccionesCuenta cuenta;
 
-    public ControlCuenta(CuentaBancaria cuenta) {
+    public CuentaMonitor(AccionesCuenta cuenta) {
         this.cuenta = cuenta;
     }
 

@@ -1,10 +1,5 @@
-import Multihilos.Ejercicio7.Contador;
-import Multihilos.Ejercicio7.Control;
-import Sync1.ControlCuenta;
-import Sync1.CuentaBancaria;
-import Sync2.Almacen;
-import Sync2.Carga;
-import Sync2.Empaquetado;
+import EjerciciosMonitores.ejerMonitor1.Clientes;
+import EjerciciosMonitores.ejerMonitor1.Mesas;
 
 static void main(String[] args) throws InterruptedException {
 
@@ -191,6 +186,7 @@ static void main(String[] args) throws InterruptedException {
     miHilo1.join();
     miHilo2.join();*/
 
+    /*
     //sync2
     Almacen amazon = new Almacen();
 
@@ -263,5 +259,25 @@ static void main(String[] args) throws InterruptedException {
     miHilo15.join();
     miHilo16.join();
     System.out.println("Las unidades totales son: " + amazon.getUnidades());
+ /*Otra forma de crear  y lanzar hilos
+        Thread[] hilos=new Thread[4];
+        for (int i = 0; i <3 ; i++) {
+            hilos[i]=new Hilo();
+            hilos[i].start();
+        }*/
+
+    //monitores1
+    Thread[] hilos=new Thread[10];
+    for (int i = 0; i < 10; i++) {
+        Clientes clientes = new Clientes(i);
+       Mesas mesas = new Mesas(5);
+       Thread hiloMesa = new Thread(clientes);
+
+       hilos[i] = new Thread();
+       hilos[i].start();
+
+    }
+
+
 
 }
