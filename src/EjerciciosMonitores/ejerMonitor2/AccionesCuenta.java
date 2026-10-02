@@ -1,8 +1,8 @@
 package EjerciciosMonitores.ejerMonitor2;
 
 public class AccionesCuenta implements Runnable {
-    private static final int cantidad = 10;
-    private static final int operaciones = 100;
+    private static int cantidad = 10;
+    private static int operaciones = 100;
 
     private final CuentaMonitor cuenta;
     private final boolean ahorrador;

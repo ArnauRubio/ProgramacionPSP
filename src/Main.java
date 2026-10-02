@@ -2,6 +2,9 @@ import EjerciciosMonitores.ejerMonitor1.Clientes;
 import EjerciciosMonitores.ejerMonitor1.Mesas;
 import EjerciciosMonitores.ejerMonitor2.AccionesCuenta;
 import EjerciciosMonitores.ejerMonitor2.CuentaMonitor;
+import EjerciciosMonitores.ejerMonitor3.Museo;
+import EjerciciosMonitores.ejerMonitor3.Personas;
+import EjerciciosMonitores.ejerMonitor3.Temperatura;
 import EjerciciosSyncronhized.Sync1.CuentaBancaria;
 import EjerciciosSyncronhized.Sync2.Almacen;
 import EjerciciosSyncronhized.Sync2.Carga;
@@ -217,6 +220,7 @@ static void main(String[] args) throws InterruptedException {
     System.out.println("Restaurante cerrado. Mesas disponibles: " + mesas.getMesasDisponibles());
     */
 
+
     /*
     //monitor2
     CuentaMonitor cuentaMonitor = new CuentaMonitor();
@@ -234,5 +238,14 @@ static void main(String[] args) throws InterruptedException {
     System.out.println("Saldo final de la cuenta: " + cuentaMonitor.getSaldo() + " €");
 
      */
+
+    //monitor3
+    Museo museo = new Museo(0);
+    Thread[] hilosMuseo = new Thread[60];
+    Temperatura tem = new Temperatura(20);
+    for (int i = 0; i < 60; i++) {
+        hilosMuseo[i] = new Thread(new Personas(i));
+    }
+
 
 }
