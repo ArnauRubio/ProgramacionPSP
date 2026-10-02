@@ -1,5 +1,16 @@
 import EjerciciosMonitores.ejerMonitor1.Clientes;
 import EjerciciosMonitores.ejerMonitor1.Mesas;
+import EjerciciosMonitores.ejerMonitor2.AccionesCuenta;
+import EjerciciosMonitores.ejerMonitor2.CuentaMonitor;
+import EjerciciosSyncronhized.Sync1.CuentaBancaria;
+import EjerciciosSyncronhized.Sync2.Almacen;
+import EjerciciosSyncronhized.Sync2.Carga;
+import EjerciciosSyncronhized.Sync2.Empaquetado;
+import Multihilos.Ejercicio5.CalcArray;
+import Multihilos.Ejercicio5.CrearArray;
+import Multihilos.Ejercicio6.Carrera;
+import Multihilos.Ejercicio7.Contador;
+import Multihilos.Ejercicio7.Control;
 
 static void main(String[] args) throws InterruptedException {
 
@@ -91,193 +102,137 @@ static void main(String[] args) throws InterruptedException {
     hiloCrear.join();
     int[] array = crearArray.getArray();
 
-    CalcArray calc1 = new CalcArray(array, 0, 500);
-    CalcArray calc2 = new CalcArray(array, 500, 1000);
-    CalcArray calc3 = new CalcArray(array, 1000, 1500);
-    CalcArray calc4 = new CalcArray(array, 1500, 2000);
+    int numeroHilos = Math.min(Runtime.getRuntime().availableProcessors(), array.length);
+    CalcArray[] calculos = new CalcArray[numeroHilos];
+    Thread[] hilos = new Thread[numeroHilos];
 
-    Thread hilo1 = new Thread(calc1);
-    Thread hilo2 = new Thread(calc2);
-    Thread hilo3 = new Thread(calc3);
-    Thread hilo4 = new Thread(calc4);
+    for (int i = 0; i < numeroHilos; i++) {
+        int inicio = i * array.length / numeroHilos;
+        int fin = (i + 1) * array.length / numeroHilos;
+        calculos[i] = new CalcArray(array, inicio, fin);
+        hilos[i] = new Thread(calculos[i], "Calculador-" + (i + 1));
+        hilos[i].start();
+    }
 
-    hilo1.start();
-    hilo2.start();
-    hilo3.start();
-    hilo4.start();
+    for (Thread hilo : hilos) {
+        hilo.join();
+    }
 
-    hilo1.join();
-    hilo2.join();
-    hilo3.join();
-    hilo4.join();
-
-    int sumaTotal = calc1.getSuma() + calc2.getSuma() + calc3.getSuma() + calc4.getSuma();
+    long sumaTotal = 0;
+    for (CalcArray calculo : calculos) {
+        sumaTotal += calculo.getSuma();
+    }
 
     double media = (double) sumaTotal / array.length;
 
-    System.out.println("Suma1: " + calc1.getSuma());
-    System.out.println("Suma2: " + calc2.getSuma());
-    System.out.println("Suma3: " + calc3.getSuma());
-    System.out.println("Suma4: " + calc4.getSuma());
     System.out.println("Suma total: " + sumaTotal);
-    System.out.println("Media: " + media);*/
+    System.out.println("Media: " + media);
+
+    */
 
     /*
     //ejer6
-    Carrera miCarrera = new Carrera();
-    Thread hiloCarrera = new Thread(miCarrera);
+    Carrera.correrMismoRitmo();
+    Carrera.correrRitmoPropio();
+    */
 
-    hiloCarrera.start();
-
-    Atletas miAtleta = new Atletas();
-    Thread hilo1 = new Thread(miAtleta, "Arnau");
-    Atletas miAtleta2 = new Atletas();
-    Thread hilo2 = new Thread(miAtleta2, "Laura");
-    Atletas miAtleta3 = new Atletas();
-    Thread hilo3 = new Thread(miAtleta3, "Alberto");
-
-    hilo1.start();
-    hilo2.start();
-    hilo3.start();
-
-    hilo1.join();
-    hilo2.join();
-    hilo3.join();
-    System.out.println("La carrera ha terminado");*/
 
     /*
     //ejer7
     Control compartido = new Control();
+    Thread[] hilosContador = new Thread[4];
 
-    Contador miContador = new Contador(compartido);
-    Contador miContador2 = new Contador(compartido);
-    Contador miContador3 = new Contador(compartido);
-    Contador miContador4 = new Contador(compartido);
+    for (int i = 0; i < hilosContador.length; i++) {
+        hilosContador[i] = new Thread(new Contador(compartido), "Contador-" + (i + 1));
+        hilosContador[i].start();
+    }
 
-    Thread hiloContador = new Thread(miContador, "contador1");
-    Thread hiloContador2 = new Thread(miContador2, "contador2");
-    Thread hiloContador3 = new Thread(miContador3, "contador3");
-    Thread hiloContador4 = new Thread(miContador4, "contador4");
+    for (Thread hilo : hilosContador) {
+        hilo.join();
+    }
 
-    hiloContador.start();
-    hiloContador2.start();
-    hiloContador3.start();
-    hiloContador4.start();
-    hiloContador.join();
-    hiloContador2.join();
-    hiloContador3.join();
-    hiloContador4.join();
-
-    System.out.println("Suma total: " + compartido);*/
+    System.out.println("Valor final del contador: " + compartido.getCont());
+    */
 
     /*
     //sync1
-    CuentaBancaria nCuenta = new CuentaBancaria();
-    nCuenta.retirar();
-    CuentaBancaria nCuenta2 = new CuentaBancaria();
-    nCuenta2.ingresar();
+    CuentaBancaria cuenta = new CuentaBancaria();
+    Thread[] hilosCuenta = new Thread[10];
 
-    Thread miHilo1 = new Thread(nCuenta);
-    Thread miHilo2 = new Thread(nCuenta2);
+    for (int i = 0; i < 5; i++) {
+        int numeroHilo = i + 1;
+        hilosCuenta[i] = new Thread(() -> {
+            for (int operacion = 0; operacion < 1000; operacion++) {
+                cuenta.ingresar(10);
+            }
+        }, "Ingreso-" + numeroHilo);
+        hilosCuenta[i].start();
 
-    miHilo1.start();
-    miHilo2.start();
+        hilosCuenta[i + 5] = new Thread(() -> {
+            for (int operacion = 0; operacion < 1000; operacion++) {
+                cuenta.retirar(10);
+            }
+        }, "Retiro-" + numeroHilo);
+        hilosCuenta[i + 5].start();
+    }
 
-    miHilo1.join();
-    miHilo2.join();*/
+    for (Thread hilo : hilosCuenta) {
+        hilo.join();
+    }
+    System.out.println("Saldo final: " + cuenta.getSaldo() + " €");
+    */
 
     /*
     //sync2
     Almacen amazon = new Almacen();
+    Thread[] hilosAlmacen = new Thread[16];
 
-    Carga miCarga1 = new Carga(amazon, "Amazon");
-    Thread miHilo1 = new Thread(miCarga1, "Hilo1");
-    Carga miCarga2 = new Carga(amazon, "Amazon");
-    Thread miHilo2 = new Thread(miCarga2, "Hilo2");
-    Carga miCarga3 = new Carga(amazon, "Amazon");
-    Thread miHilo3 = new Thread(miCarga3, "Hilo3");
-    Carga miCarga4 = new Carga(amazon, "Amazon");
-    Thread miHilo4 = new Thread(miCarga4, "Hilo4");
-    Carga miCarga5 = new Carga(amazon, "Amazon");
-    Thread miHilo5 = new Thread(miCarga5, "Hilo5");
-    Carga miCarga6 = new Carga(amazon, "Amazon");
-    Thread miHilo6 = new Thread(miCarga6, "Hilo6");
-    Carga miCarga7 = new Carga(amazon, "Amazon");
-    Thread miHilo7 = new Thread(miCarga7, "Hilo7");
-    Carga miCarga8 = new Carga(amazon, "Amazon");
-    Thread miHilo8 = new Thread(miCarga8, "Hilo8");
-
-    Empaquetado miEmpaquetado1 = new Empaquetado(amazon, "Amazon");
-    Thread miHilo9 = new Thread(miEmpaquetado1, "Hilo9");
-    Empaquetado miEmpaquetado2 = new Empaquetado(amazon, "Amazon");
-    Thread miHilo10 = new Thread(miEmpaquetado2, "Hilo10");
-    Empaquetado miEmpaquetado3 = new Empaquetado(amazon, "Amazon");
-    Thread miHilo11 = new Thread(miEmpaquetado3, "Hilo11");
-    Empaquetado miEmpaquetado4 = new Empaquetado(amazon, "Amazon");
-    Thread miHilo12 = new Thread(miEmpaquetado4, "Hilo12");
-    Empaquetado miEmpaquetado5 = new Empaquetado(amazon, "Amazon");
-    Thread miHilo13 = new Thread(miEmpaquetado5, "Hilo13");
-    Empaquetado miEmpaquetado6 = new Empaquetado(amazon, "Amazon");
-    Thread miHilo14 = new Thread(miEmpaquetado6, "Hilo14");
-    Empaquetado miEmpaquetado7 = new Empaquetado(amazon, "Amazon");
-    Thread miHilo15 = new Thread(miEmpaquetado7, "Hilo15");
-    Empaquetado miEmpaquetado8 = new Empaquetado(amazon, "Amazon");
-    Thread miHilo16 = new Thread(miEmpaquetado8, "Hilo16");
-
-    miHilo1.start();
-    miHilo2.start();
-    miHilo3.start();
-    miHilo4.start();
-    miHilo5.start();
-    miHilo6.start();
-    miHilo7.start();
-    miHilo8.start();
-
-    miHilo9.start();
-    miHilo10.start();
-    miHilo11.start();
-    miHilo12.start();
-    miHilo13.start();
-    miHilo14.start();
-    miHilo15.start();
-    miHilo16.start();
-
-    miHilo1.join();
-    miHilo2.join();
-    miHilo3.join();
-    miHilo4.join();
-    miHilo5.join();
-    miHilo6.join();
-    miHilo7.join();
-    miHilo8.join();
-    miHilo9.join();
-    miHilo10.join();
-    miHilo11.join();
-    miHilo12.join();
-    miHilo13.join();
-    miHilo14.join();
-    miHilo15.join();
-    miHilo16.join();
+    for (int i = 0; i < 8; i++) {
+        hilosAlmacen[i] = new Thread(new Carga(amazon), "Carga-" + (i + 1));
+        hilosAlmacen[i + 8] = new Thread(new Empaquetado(amazon), "Empaquetado-" + (i + 1));
+    }
+    for (Thread hilo : hilosAlmacen) {
+        hilo.start();
+    }
+    for (Thread hilo : hilosAlmacen) {
+        hilo.join();
+    }
     System.out.println("Las unidades totales son: " + amazon.getUnidades());
- /*Otra forma de crear  y lanzar hilos
-        Thread[] hilos=new Thread[4];
-        for (int i = 0; i <3 ; i++) {
-            hilos[i]=new Hilo();
-            hilos[i].start();
-        }*/
+    */
 
+    /*
     //monitores1
-    Thread[] hilos=new Thread[10];
-    for (int i = 0; i < 10; i++) {
-        Clientes clientes = new Clientes(i);
-       Mesas mesas = new Mesas(5);
-       Thread hiloMesa = new Thread(clientes);
-
-       hilos[i] = new Thread();
-       hilos[i].start();
-
+    Mesas mesas = new Mesas(5);
+    Thread[] hilosClientes = new Thread[10];
+    for (int i = 0; i < hilosClientes.length; i++) {
+        int idCliente = i + 1;
+        hilosClientes[i] = new Thread(new Clientes(idCliente, mesas), "Cliente-" + idCliente);
+        hilosClientes[i].start();
     }
 
+    for (Thread hilo : hilosClientes) {
+        hilo.join();
+    }
 
+    System.out.println("Restaurante cerrado. Mesas disponibles: " + mesas.getMesasDisponibles());
+    */
+
+    /*
+    //monitor2
+    CuentaMonitor cuentaMonitor = new CuentaMonitor();
+    Thread[] hilosCuentaMonitor = new Thread[10];
+    for (int i = 0; i < 5; i++) {
+        hilosCuentaMonitor[i] = new Thread(new AccionesCuenta(cuentaMonitor, true), "Ahorrador-" + (i + 1));
+        hilosCuentaMonitor[i + 5] = new Thread(new AccionesCuenta(cuentaMonitor, false), "Gastador-" + (i + 1));
+    }
+    for (Thread hilo : hilosCuentaMonitor) {
+        hilo.start();
+    }
+    for (Thread hilo : hilosCuentaMonitor) {
+        hilo.join();
+    }
+    System.out.println("Saldo final de la cuenta: " + cuentaMonitor.getSaldo() + " €");
+
+     */
 
 }

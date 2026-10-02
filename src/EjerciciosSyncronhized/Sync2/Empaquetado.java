@@ -1,10 +1,9 @@
 package EjerciciosSyncronhized.Sync2;
 
 public class Empaquetado implements Runnable{
-    private Almacen almacen;
+    private final Almacen almacen;
 
-    public Empaquetado(Almacen almacen, String nombre) {
-        super();
+    public Empaquetado(Almacen almacen) {
         this.almacen = almacen;
     }
     @Override
@@ -13,9 +12,9 @@ public class Empaquetado implements Runnable{
             try {
                 almacen.empaquetar(10);
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                Thread.currentThread().interrupt();
+                return;
             }
-            System.out.println(Thread.currentThread().getName() + " Tiene: " + almacen.getUnidades() + " unidades");
         }
     }
 }

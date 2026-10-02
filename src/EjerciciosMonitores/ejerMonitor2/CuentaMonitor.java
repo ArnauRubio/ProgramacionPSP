@@ -1,20 +1,26 @@
 package EjerciciosMonitores.ejerMonitor2;
 
 public class CuentaMonitor {
-    private AccionesCuenta cuenta;
+    private static final int LIMITE_AHORRO = 250;
+    private int saldo;
 
-    public CuentaMonitor(AccionesCuenta cuenta) {
-        this.cuenta = cuenta;
+    public synchronized void ahorrar(int cantidad) throws InterruptedException {
+        while (saldo >= LIMITE_AHORRO) {
+            wait();
+        }
+        saldo += cantidad;
+        notifyAll();
     }
 
-    public synchronized void sumar(){
-        cuenta.saldo = cuenta.saldo + 10;
-    }
-    public synchronized void restar(){
-        cuenta.saldo = cuenta.saldo - 10;
+    public synchronized void gastar(int cantidad) throws InterruptedException {
+        while (saldo < cantidad) {
+            wait();
+        }
+        saldo -= cantidad;
+        notifyAll();
     }
 
-    public double getSaldo() {
-        return cuenta.saldo;
+    public synchronized int getSaldo() {
+        return saldo;
     }
 }

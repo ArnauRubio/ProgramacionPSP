@@ -1,20 +1,21 @@
 package EjerciciosSyncronhized.Sync1;
 
 public class ControlCuenta {
-   private CuentaBancaria cuenta;
+    private final CuentaBancaria cuenta;
 
     public ControlCuenta(CuentaBancaria cuenta) {
         this.cuenta = cuenta;
     }
 
-    public synchronized void sumar(){
-        cuenta.saldo = cuenta.saldo + 10;
+    public void sumar() {
+        cuenta.ingresar(10);
     }
-    public synchronized void restar(){
-        cuenta.saldo = cuenta.saldo - 10;
+
+    public void restar() {
+        cuenta.retirar(10);
     }
 
     public double getSaldo() {
-        return cuenta.saldo;
+        return cuenta.getSaldo();
     }
 }

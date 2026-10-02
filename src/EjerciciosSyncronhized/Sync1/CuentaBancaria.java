@@ -1,26 +1,29 @@
 package EjerciciosSyncronhized.Sync1;
 
-public class CuentaBancaria implements Runnable{
-    ControlCuenta control;
+public class CuentaBancaria {
+    private double saldo = 1000.0;
 
-    public int saldo;
-
-    @Override
-    public void run() {
-        ingresar();
-        retirar();
+    public synchronized void ingresar(double cantidad) {
+        validarCantidad(cantidad);
+        saldo += cantidad;
+        System.out.println(Thread.currentThread().getName()
+                + " ingresa " + cantidad + " €. Saldo: " + saldo + " €");
     }
 
-    public void ingresar(){
-        for (int i = 0; i < 1000; i++) {
-            control.sumar();
-            System.out.println("El saldo ahora mismo es de: " + control.getSaldo());
-        }
+    public synchronized void retirar(double cantidad) {
+        validarCantidad(cantidad);
+        saldo -= cantidad;
+        System.out.println(Thread.currentThread().getName()
+                + " retira " + cantidad + " €. Saldo: " + saldo + " €");
     }
-    public void retirar(){
-        for (int i = 0; i < 1000; i++) {
-            control.restar();
-            System.out.println("El saldo ahora mismo es de: " + control.getSaldo());
+
+    public synchronized double getSaldo() {
+        return saldo;
+    }
+
+    private void validarCantidad(double cantidad) {
+        if (cantidad <= 0) {
+            throw new IllegalArgumentException("La cantidad debe ser mayor que cero");
         }
     }
 }

@@ -1,26 +1,33 @@
 package EjerciciosSyncronhized.Sync2;
 
 public class Almacen {
-    String nombre;
-    int unidades = 100;
+    private int unidades = 100;
 
-    public synchronized void carga(int cantidad) throws InterruptedException {
-        for (int i = 0; i <= 500; i++) {
-            this.unidades += cantidad;
-        }
+    public synchronized void carga(int cantidad) {
+        validarCantidad(cantidad);
+        unidades += cantidad;
+        System.out.println(Thread.currentThread().getName()
+                + " carga " + cantidad + " unidades. Stock: " + unidades);
+        notifyAll();
     }
 
     public synchronized void empaquetar(int cantidad) throws InterruptedException {
-        while (this.unidades < cantidad) {
-            System.out.println("Hilo sin stock!!!!!!");
+        validarCantidad(cantidad);
+        while (unidades < cantidad) {
             wait();
         }
-        for (int i = 0; i <= 500; i++) {
-            this.unidades -= cantidad;
-        }
+        unidades -= cantidad;
+        System.out.println(Thread.currentThread().getName()
+                + " empaqueta " + cantidad + " unidades. Stock: " + unidades);
     }
 
-    public int getUnidades() {
+    public synchronized int getUnidades() {
         return unidades;
+    }
+
+    private void validarCantidad(int cantidad) {
+        if (cantidad <= 0) {
+            throw new IllegalArgumentException("La cantidad debe ser mayor que cero");
+        }
     }
 }
