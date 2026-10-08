@@ -10,6 +10,8 @@ import EjerciciosMonitores.ejerMonitor4.Pista;
 import EjerciciosMonitores.ejerMonitor4.Usuario;
 import EjerciciosMonitores.ejerMonitor5.Coches;
 import EjerciciosMonitores.ejerMonitor5.Puente;
+import EjerciciosSemaforos.Estudiante;
+import EjerciciosSemaforos.Impresora;
 import EjerciciosSyncronhized.Sync1.CuentaBancaria;
 import EjerciciosSyncronhized.Sync2.Almacen;
 import EjerciciosSyncronhized.Sync2.Carga;
@@ -280,6 +282,7 @@ static void main(String[] args) throws InterruptedException {
     servicioLimpieza.join();
      */
 
+    /*
     //monitor5
     Puente puente = new Puente();
     Thread[] hilosCoches = new Thread[20];
@@ -294,4 +297,18 @@ static void main(String[] args) throws InterruptedException {
     }
     System.out.println("Puente libre. Peso soportado: " + puente.getPesoActual()
             + " kg; vehículos: " + puente.getVehiculosEnPuente());
+            */
+
+    //semaforos1
+    Impresora impresora = new Impresora();
+    Thread[] hilosEstudiantes = new Thread[10];
+    for (int i = 0; i < hilosEstudiantes.length; i++) {
+        int idEstudiante = i + 1;
+        hilosEstudiantes[i] = new Thread(new Estudiante(idEstudiante, impresora), "Estudiante-" + idEstudiante);
+        hilosEstudiantes[i].start();
+    }
+    for (Thread hilo: hilosEstudiantes){
+        hilo.join();
+    }
+
 }

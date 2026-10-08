@@ -3,9 +3,9 @@ package EjerciciosMonitores.ejerMonitor5;
 import java.util.Random;
 
 public class Coches implements Runnable {
-    private final int idVehiculo;
-    private final int peso;
-    private final Puente puente;
+    private int idVehiculo;
+    private int peso;
+    private Puente puente;
 
     public Coches(int idVehiculo, int peso, Puente puente) {
         if (puente == null) {
@@ -30,23 +30,6 @@ public class Coches implements Runnable {
             if (enPuente) {
                 puente.salir(idVehiculo, peso);
             }
-        }
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        Puente puente = new Puente();
-        Random random = new Random();
-        Thread[] hilos = new Thread[20];
-
-        for (int i = 0; i < hilos.length; i++) {
-            int peso = 1_000 + random.nextInt(5_001);
-            hilos[i] = new Thread(new Coches(i + 1, peso, puente), "Vehiculo-" + (i + 1));
-        }
-        for (Thread hilo : hilos) {
-            hilo.start();
-        }
-        for (Thread hilo : hilos) {
-            hilo.join();
         }
     }
 }

@@ -57,21 +57,4 @@ public class Pista {
         cerrada = true;
         notifyAll();
     }
-
-    public static void main(String[] args) throws InterruptedException {
-        Pista pista = new Pista();
-        Thread servicioLimpieza = new Thread(new Limpieza(pista, 1000), "Limpieza");
-        Thread[] usuarios = new Thread[8];
-        servicioLimpieza.start();
-
-        for (int i = 0; i < usuarios.length; i++) {
-            usuarios[i] = new Thread(new Usuario(i + 1, pista), "Usuario-" + (i + 1));
-            usuarios[i].start();
-        }
-        for (Thread usuario : usuarios) {
-            usuario.join();
-        }
-        pista.cerrar();
-        servicioLimpieza.join();
-    }
 }

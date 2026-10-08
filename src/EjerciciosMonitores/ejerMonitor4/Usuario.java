@@ -5,9 +5,6 @@ public class Usuario implements Runnable {
     private final Pista pista;
 
     public Usuario(int idUsuario, Pista pista) {
-        if (pista == null) {
-            throw new IllegalArgumentException("La pista no puede ser nula");
-        }
         this.idUsuario = idUsuario;
         this.pista = pista;
     }

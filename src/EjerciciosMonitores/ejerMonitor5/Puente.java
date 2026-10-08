@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Puente {
-    private static final int PESO_MAXIMO = 15_000;
-    private static final int VEHICULOS_MAXIMOS = 5;
+    private static final int peso_maximo = 15000;
+    private static final int vehiculos_maximos = 5;
 
     private int pesoActual;
     private int vehiculosEnPuente;
@@ -15,7 +15,7 @@ public class Puente {
         if (peso <= 0) {
             throw new IllegalArgumentException("El peso del vehículo debe ser mayor que cero");
         }
-        if (peso > PESO_MAXIMO) {
+        if (peso > peso_maximo) {
             System.out.println("Vehículo " + idVehiculo + " no puede entrar: pesa " + peso
                     + " kg y supera el límite del puente (" + pesoActual + " kg soportados actualmente)");
             return false;
@@ -24,7 +24,7 @@ public class Puente {
             throw new IllegalStateException("El vehículo ya está en el puente: " + idVehiculo);
         }
 
-        while (vehiculosEnPuente >= VEHICULOS_MAXIMOS || pesoActual + peso > PESO_MAXIMO) {
+        while (vehiculosEnPuente >= vehiculos_maximos || pesoActual + peso > peso_maximo) {
             System.out.println("Vehículo " + idVehiculo + " espera. Peso actual del puente: "
                     + pesoActual + " kg; vehículos: " + vehiculosEnPuente);
             wait();
