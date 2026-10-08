@@ -1,23 +1,42 @@
 package EjerciciosMonitores.ejerMonitor3;
 
-public class Temperatura implements Runnable {
-  double grados = 20;
+import java.util.Random;
 
-    public Temperatura(double grados) {
+public class Temperatura implements Runnable {
+    private final Museo museo;
+    private final long intervalo;
+    private final Random random = new Random();
+    private double grados;
+
+    public Temperatura(Museo museo, double grados, long intervalo) {
+        if (museo == null) {
+            throw new IllegalArgumentException("El museo no puede ser nulo");
+        }
+        if (intervalo <= 0) {
+            throw new IllegalArgumentException("El intervalo debe ser mayor que cero");
+        }
+        this.museo = museo;
         this.grados = grados;
+        this.intervalo = intervalo;
+        museo.notificarTemperatura(grados);
     }
 
-    public double getGrados() {
+    public synchronized double getGrados() {
         return grados;
     }
 
     @Override
     public void run() {
-        grados = Math.random() + 1;
         try {
-            Thread.sleep(500);
+            while (!Thread.currentThread().isInterrupted()) {
+                Thread.sleep(intervalo);
+                synchronized (this) {
+                    grados = 20 + random.nextDouble() * 20;
+                    museo.notificarTemperatura(grados);
+                }
+            }
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Thread.currentThread().interrupt();
         }
     }
 }

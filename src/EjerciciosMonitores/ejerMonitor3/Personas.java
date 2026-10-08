@@ -1,27 +1,30 @@
 package EjerciciosMonitores.ejerMonitor3;
 
-import java.util.Random;
-
 public class Personas implements Runnable {
-   int gente = 0;
+    private final int idPersona;
+    private final Museo museo;
 
-    public Personas(int gente) {
-        this.gente = gente;
+    public Personas(int idPersona, Museo museo) {
+        if (museo == null) {
+            throw new IllegalArgumentException("El museo no puede ser nulo");
+        }
+        this.idPersona = idPersona;
+        this.museo = museo;
     }
-
-    public int getGente() {
-        return gente;
-    }
-
-    Random r = new Random();
-    int numero = r.nextInt(21) - 10;
 
     @Override
     public void run() {
-
-        while (gente < 50) {
-            gente = gente + numero;
+        boolean dentro = false;
+        try {
+            museo.entrar(idPersona);
+            dentro = true;
+            Thread.sleep((long) (Math.random() * 1500) + 500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } finally {
+            if (dentro) {
+                museo.salir(idPersona);
+            }
         }
-
     }
 }

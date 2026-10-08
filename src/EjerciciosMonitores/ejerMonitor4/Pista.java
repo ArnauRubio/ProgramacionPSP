@@ -1,31 +1,77 @@
 package EjerciciosMonitores.ejerMonitor4;
 
 public class Pista {
-   boolean libre;
-    boolean ocupada;
-    boolean pendiente_limpieza;
-    boolean limpiada;
+    private boolean ocupada;
+    private boolean limpiezaPendiente;
+    private boolean limpiando;
+    private boolean cerrada;
 
-   public synchronized void libre() throws InterruptedException {
-       if (!libre){
-           System.out.println("Pista ocupada");
-           wait();
-       }
-       ocupada = true;
-       System.out.println("La pista ha sido ocupada por: " + usuario);
-   }
+    public synchronized void reservar(int idUsuario) throws InterruptedException {
+        while ((ocupada || limpiezaPendiente || limpiando) && !cerrada) {
+            System.out.println("Usuario " + idUsuario + " espera: la pista no está disponible");
+            wait();
+        }
+        if (cerrada) {
+            throw new IllegalStateException("La pista está cerrada");
+        }
+        ocupada = true;
+        System.out.println("Usuario " + idUsuario + " reserva la pista");
+    }
 
-   public synchronized void ocupada() throws InterruptedException {
-       if (ocupada) {
-           Thread.sleep(2000);
-       }else {
-           pendiente_limpieza = true;
-       }
-   }
+    public synchronized void terminarUso(int idUsuario) {
+        if (!ocupada) {
+            throw new IllegalStateException("La pista no está ocupada");
+        }
+        ocupada = false;
+        limpiezaPendiente = true;
+        System.out.println("Usuario " + idUsuario + " termina. La pista debe limpiarse");
+        notifyAll();
+    }
 
-   public synchronized void porLimpiar(){
-       if (pendiente_limpieza){
+    public synchronized boolean esperarLimpieza() throws InterruptedException {
+        while (!limpiezaPendiente && !cerrada) {
+            wait();
+        }
+        if (!limpiezaPendiente) {
+            return false;
+        }
+        limpiezaPendiente = false;
+        limpiando = true;
+        return true;
+    }
 
-       }
-   }
+    public synchronized void terminarLimpieza() {
+        if (!limpiando) {
+            throw new IllegalStateException("No hay una limpieza en curso");
+        }
+        limpiando = false;
+        System.out.println("Pista limpia y disponible");
+        notifyAll();
+    }
+
+    public synchronized boolean estaDisponible() {
+        return !ocupada && !limpiezaPendiente && !limpiando && !cerrada;
+    }
+
+    public synchronized void cerrar() {
+        cerrada = true;
+        notifyAll();
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Pista pista = new Pista();
+        Thread servicioLimpieza = new Thread(new Limpieza(pista, 1000), "Limpieza");
+        Thread[] usuarios = new Thread[8];
+        servicioLimpieza.start();
+
+        for (int i = 0; i < usuarios.length; i++) {
+            usuarios[i] = new Thread(new Usuario(i + 1, pista), "Usuario-" + (i + 1));
+            usuarios[i].start();
+        }
+        for (Thread usuario : usuarios) {
+            usuario.join();
+        }
+        pista.cerrar();
+        servicioLimpieza.join();
+    }
 }

@@ -5,6 +5,11 @@ import EjerciciosMonitores.ejerMonitor2.CuentaMonitor;
 import EjerciciosMonitores.ejerMonitor3.Museo;
 import EjerciciosMonitores.ejerMonitor3.Personas;
 import EjerciciosMonitores.ejerMonitor3.Temperatura;
+import EjerciciosMonitores.ejerMonitor4.Limpieza;
+import EjerciciosMonitores.ejerMonitor4.Pista;
+import EjerciciosMonitores.ejerMonitor4.Usuario;
+import EjerciciosMonitores.ejerMonitor5.Coches;
+import EjerciciosMonitores.ejerMonitor5.Puente;
 import EjerciciosSyncronhized.Sync1.CuentaBancaria;
 import EjerciciosSyncronhized.Sync2.Almacen;
 import EjerciciosSyncronhized.Sync2.Carga;
@@ -239,13 +244,54 @@ static void main(String[] args) throws InterruptedException {
 
      */
 
+    /*
     //monitor3
     Museo museo = new Museo(0);
     Thread[] hilosMuseo = new Thread[60];
-    Temperatura tem = new Temperatura(20);
+    Thread sensorTemperatura = new Thread(new Temperatura(museo, 20, 500), "Sensor-temperatura");
+    sensorTemperatura.start();
     for (int i = 0; i < 60; i++) {
-        hilosMuseo[i] = new Thread(new Personas(i));
+        hilosMuseo[i] = new Thread(new Personas(i + 1, museo), "Persona-" + (i + 1));
+        hilosMuseo[i].start();
     }
+    for (Thread hilo : hilosMuseo) {
+        hilo.join();
+    }
+    sensorTemperatura.interrupt();
+    sensorTemperatura.join();
+    System.out.println("Visita terminada. Personas en la sala: " + museo.getPersonas());
+     */
 
+    /*
+    //monitor4
+    Pista pista = new Pista();
+    Thread servicioLimpieza = new Thread(new Limpieza(pista, 1000), "Limpieza");
+    Thread[] hilosUsuarios = new Thread[8];
+    servicioLimpieza.start();
+    for (int i = 0; i < hilosUsuarios.length; i++) {
+        int idUsuario = i + 1;
+        hilosUsuarios[i] = new Thread(new Usuario(idUsuario, pista), "Usuario-" + idUsuario);
+        hilosUsuarios[i].start();
+    }
+    for (Thread hilo : hilosUsuarios) {
+        hilo.join();
+    }
+    pista.cerrar();
+    servicioLimpieza.join();
+     */
 
+    //monitor5
+    Puente puente = new Puente();
+    Thread[] hilosCoches = new Thread[20];
+    for (int i = 0; i < hilosCoches.length; i++) {
+        int idVehiculo = i + 1;
+        int peso = 1000 + (i % 7) * 1000;
+        hilosCoches[i] = new Thread(new Coches(idVehiculo, peso, puente), "Vehiculo-" + idVehiculo);
+        hilosCoches[i].start();
+    }
+    for (Thread hilo : hilosCoches) {
+        hilo.join();
+    }
+    System.out.println("Puente libre. Peso soportado: " + puente.getPesoActual()
+            + " kg; vehículos: " + puente.getVehiculosEnPuente());
 }
