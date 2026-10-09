@@ -1,4 +1,4 @@
-package EjerciciosSemaforos;
+package EjerciciosSemaforos.ejerSem1;
 
 import java.util.Random;
 import java.util.concurrent.Semaphore;
@@ -6,7 +6,7 @@ import java.util.concurrent.Semaphore;
 public class Impresora {
     private boolean ocupada;
 
-private Semaphore sem = new Semaphore(1);
+    private Semaphore sem = new Semaphore(1);
 
 
     public void imprimir(int idEstudiante) throws InterruptedException {
@@ -19,6 +19,7 @@ private Semaphore sem = new Semaphore(1);
         System.out.println(idEstudiante + " Ha terminado");
         ocupada = false;
         sem.release();
+        System.out.println("Permisos despues del release"+ sem.availablePermits());
 
     }
 

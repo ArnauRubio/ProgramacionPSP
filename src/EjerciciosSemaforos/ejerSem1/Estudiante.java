@@ -1,6 +1,4 @@
-package EjerciciosSemaforos;
-
-import EjerciciosMonitores.ejerMonitor4.Pista;
+package EjerciciosSemaforos.ejerSem1;
 
 import java.util.concurrent.Semaphore;
 
@@ -13,12 +11,8 @@ public class Estudiante implements Runnable {
         this.impresora = impresora;
     }
 
-    Semaphore sem = new Semaphore(1);
-
     @Override
     public void run() {
-
-
         try {
             impresora.imprimir(idEstudiante);
 

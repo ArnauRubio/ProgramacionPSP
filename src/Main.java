@@ -1,26 +1,15 @@
-import EjerciciosMonitores.ejerMonitor1.Clientes;
-import EjerciciosMonitores.ejerMonitor1.Mesas;
-import EjerciciosMonitores.ejerMonitor2.AccionesCuenta;
-import EjerciciosMonitores.ejerMonitor2.CuentaMonitor;
-import EjerciciosMonitores.ejerMonitor3.Museo;
-import EjerciciosMonitores.ejerMonitor3.Personas;
-import EjerciciosMonitores.ejerMonitor3.Temperatura;
-import EjerciciosMonitores.ejerMonitor4.Limpieza;
-import EjerciciosMonitores.ejerMonitor4.Pista;
-import EjerciciosMonitores.ejerMonitor4.Usuario;
-import EjerciciosMonitores.ejerMonitor5.Coches;
-import EjerciciosMonitores.ejerMonitor5.Puente;
-import EjerciciosSemaforos.Estudiante;
-import EjerciciosSemaforos.Impresora;
-import EjerciciosSyncronhized.Sync1.CuentaBancaria;
-import EjerciciosSyncronhized.Sync2.Almacen;
-import EjerciciosSyncronhized.Sync2.Carga;
-import EjerciciosSyncronhized.Sync2.Empaquetado;
-import Multihilos.Ejercicio5.CalcArray;
-import Multihilos.Ejercicio5.CrearArray;
-import Multihilos.Ejercicio6.Carrera;
-import Multihilos.Ejercicio7.Contador;
-import Multihilos.Ejercicio7.Control;
+import EjerciciosSemaforos.ejerSem1.Estudiante;
+import EjerciciosSemaforos.ejerSem1.Impresora;
+import EjerciciosSemaforos.ejerSem2.Alumno;
+import EjerciciosSemaforos.ejerSem2.Portatil;
+import EjerciciosSemaforos.ejerSem3.Ascensor;
+import EjerciciosSemaforos.ejerSem3.Pasajero;
+import EjerciciosSemaforos.ejerSem4.Coche;
+import EjerciciosSemaforos.ejerSem4.Parking;
+import EjerciciosSemaforos.ejerSem5.Cuerpos;
+import EjerciciosSemaforos.ejerSem5.Ensamblar;
+import EjerciciosSemaforos.ejerSem5.Mangas;
+import EjerciciosSemaforos.ejerSem5.Taller;
 
 static void main(String[] args) throws InterruptedException {
 
@@ -299,6 +288,7 @@ static void main(String[] args) throws InterruptedException {
             + " kg; vehículos: " + puente.getVehiculosEnPuente());
             */
 
+    /*
     //semaforos1
     Impresora impresora = new Impresora();
     Thread[] hilosEstudiantes = new Thread[10];
@@ -308,6 +298,76 @@ static void main(String[] args) throws InterruptedException {
         hilosEstudiantes[i].start();
     }
     for (Thread hilo: hilosEstudiantes){
+        hilo.join();
+    }
+     */
+
+    /*
+    //semaforos2
+    Portatil portatil = new Portatil();
+    Thread[] hilosAlumnos = new Thread[12];
+    for (int i = 0; i < hilosAlumnos.length; i++) {
+        int idAlumno = i + 1;
+        hilosAlumnos[i] = new Thread(new Alumno(idAlumno, portatil), "Alumno-" + idAlumno);
+        hilosAlumnos[i].start();
+    }
+    for (Thread hilo : hilosAlumnos){
+        hilo.join();
+    }
+     */
+
+    /*
+    //semaforos3
+    Ascensor ascensor = new Ascensor();
+    Thread[] hilosPasajeros = new Thread[24];
+    for (int i = 0; i < hilosPasajeros.length; i++) {
+        int idPasajero = i + 1;
+        hilosPasajeros[i] = new Thread(new Pasajero(idPasajero, ascensor), "pasajero-" + idPasajero);
+        hilosPasajeros[i].start();
+    }
+    for (Thread hilo : hilosPasajeros){
+        hilo.join();
+    }
+     */
+
+    /*
+    //semaforos4
+    Parking parking = new Parking();
+    int peso = (int) ((Math.random() * 4000) + 1000);
+    Thread[] hilosCoches = new Thread[50];
+    for (int i = 0; i < hilosCoches.length; i++) {
+        int idCoche = i + 1;
+        hilosCoches[i] = new Thread(new Coche(idCoche, peso, parking), "Coche-" + idCoche);
+        hilosCoches[i].start();
+    }
+    for (Thread hilo : hilosCoches){
+        hilo.join();
+    }
+     */
+
+    //semaforos5
+    Taller taller = new Taller();
+    Thread[] hiloMangas = new Thread[20];
+    Thread[] hiloCuerpos = new Thread[10];
+    Thread[] hiloJerseys = new Thread[5];
+    for (int i = 0; i < hiloMangas.length; i++) {
+        int nManga = i + 1;
+        int nCuerpo = i + 1;
+        int nJersey = i + 1;
+        hiloMangas[i] = new Thread(new Mangas(), "Manga numero: " + nManga);
+        hiloCuerpos[i] = new Thread(new Cuerpos(), "Cuerpo numero: " + nCuerpo);
+        hiloJerseys[i] = new Thread(new Ensamblar(), "Jersey numero: " + nJersey);
+        hiloMangas[i].start();
+        hiloCuerpos[i].start();
+        hiloJerseys[i].start();
+    }
+    for (Thread hilo : hiloMangas){
+        hilo.join();
+    }
+     for (Thread hilo : hiloCuerpos){
+        hilo.join();
+    }
+     for (Thread hilo : hiloJerseys){
         hilo.join();
     }
 

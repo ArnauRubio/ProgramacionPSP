@@ -1,8 +1,8 @@
 package EjerciciosMonitores.ejerMonitor1;
 
 public class Clientes implements Runnable{
-    private final int idCliente;
-    private final Mesas mesas;
+    private  int idCliente;
+    private  Mesas mesas;
 
     public Clientes(int idCliente, Mesas mesas) {
         this.idCliente = idCliente;
