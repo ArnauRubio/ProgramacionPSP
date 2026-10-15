@@ -347,16 +347,16 @@ static void main(String[] args) throws InterruptedException {
 
     //semaforos5
     Taller taller = new Taller();
-    Thread[] hiloMangas = new Thread[20];
-    Thread[] hiloCuerpos = new Thread[10];
-    Thread[] hiloJerseys = new Thread[5];
+    Thread[] hiloMangas = new Thread[1];
+    Thread[] hiloCuerpos = new Thread[1];
+    Thread[] hiloJerseys = new Thread[1];
     for (int i = 0; i < hiloMangas.length; i++) {
         int nManga = i + 1;
         int nCuerpo = i + 1;
         int nJersey = i + 1;
-        hiloMangas[i] = new Thread(new Mangas(), "Manga numero: " + nManga);
-        hiloCuerpos[i] = new Thread(new Cuerpos(), "Cuerpo numero: " + nCuerpo);
-        hiloJerseys[i] = new Thread(new Ensamblar(), "Jersey numero: " + nJersey);
+        hiloMangas[i] = new Thread(new Mangas(taller), "Manga numero: " + nManga);
+        hiloCuerpos[i] = new Thread(new Cuerpos(taller), "Cuerpo numero: " + nCuerpo);
+        hiloJerseys[i] = new Thread(new Ensamblar(taller), "Jersey numero: " + nJersey);
         hiloMangas[i].start();
         hiloCuerpos[i].start();
         hiloJerseys[i].start();
