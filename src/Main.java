@@ -1,16 +1,3 @@
-import EjerciciosSemaforos.ejerSem1.Estudiante;
-import EjerciciosSemaforos.ejerSem1.Impresora;
-import EjerciciosSemaforos.ejerSem2.Alumno;
-import EjerciciosSemaforos.ejerSem2.Portatil;
-import EjerciciosSemaforos.ejerSem3.Ascensor;
-import EjerciciosSemaforos.ejerSem3.Pasajero;
-import EjerciciosSemaforos.ejerSem4.Coche;
-import EjerciciosSemaforos.ejerSem4.Parking;
-import EjerciciosSemaforos.ejerSem5.Cuerpos;
-import EjerciciosSemaforos.ejerSem5.Ensamblar;
-import EjerciciosSemaforos.ejerSem5.Mangas;
-import EjerciciosSemaforos.ejerSem5.Taller;
-
 static void main(String[] args) throws InterruptedException {
 
    /*
@@ -345,6 +332,7 @@ static void main(String[] args) throws InterruptedException {
     }
      */
 
+    /*
     //semaforos5
     Taller taller = new Taller();
     Thread[] hiloMangas = new Thread[1];
@@ -370,5 +358,8 @@ static void main(String[] args) throws InterruptedException {
      for (Thread hilo : hiloJerseys){
         hilo.join();
     }
+     */
+
+    //sockets1
 
 }
