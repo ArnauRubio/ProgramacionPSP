@@ -14,6 +14,7 @@ public class ServerSock3 {
         ServerSock3.servConnection sc = getSc();
 
         sc.salida().println("Hola, soy el servidor");
+        String mensaje;
         while ((mensaje = sc.entrada().readLine()) != null) {
 
         }

@@ -13,10 +13,7 @@ public class ClienteSock2 {
         System.out.println("Servidor dice: " + cC.entrada().readLine());
         cC.salida().println("Hola servidor, soy el cliente");
         System.out.println("Servidor dice: " + cC.entrada().readLine());
-        cC.salida().println("Cuentame un chiste");
-        System.out.println("Servidor dice: " + cC.entrada().readLine());
-        cC.salida().println("tu vida");
-        System.out.println("Servidor dice: " + cC.entrada().readLine());
+        cC.salida().println();
         cC.socket().close();
     }
 
