@@ -1,4 +1,4 @@
-package ProgramacionRed.EjerciciosSockets.ProgSockets4;
+package ProgramacionRed.EjerciciosSockets.ProgSockets4.sinHilos;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,14 +17,14 @@ public class ServerSock4 {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        atenderCliente(cliente);
+                        atenderCliente4(cliente);
                     }
                 }).start();
             }
         }
     }
 
-    private static void atenderCliente(Socket cliente) {
+    private static void atenderCliente4(Socket cliente) {
         try (Socket socket = cliente;
              BufferedReader entrada = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              PrintWriter salida = new PrintWriter(socket.getOutputStream(), true)) {
