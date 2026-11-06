@@ -1,4 +1,4 @@
-package ProgramacionRed.EjerciciosSockets.ProgSockets2;
+package ProgramacionRed.EjerciciosSockets.TCP.ProgSockets2;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,6 @@
-package ProgramacionRed.EjerciciosSockets.ProgSockets4.sinHilos;
+package ProgramacionRed.EjerciciosSockets.TCP.ProgSockets4.conHilos;
+
+import ProgramacionRed.EjerciciosSockets.TCP.SocketUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,9 +10,11 @@ import java.net.Socket;
 
 public class ClienteSock4 {
     public static void main(String[] args) throws IOException {
-        try (CliConnection conexion = getCC();
+        try (Socket socket = new Socket("localhost", 4999);
+             BufferedReader entrada = SocketUtils.crearLector(socket);
+             PrintWriter salida = SocketUtils.crearEscritor(socket);
              BufferedReader consola = new BufferedReader(new InputStreamReader(System.in))) {
-            String saludo = conexion.entrada().readLine();
+            String saludo = entrada.readLine();
             if (saludo == null) {
                 System.out.println("El servidor ha cerrado la conexion");
                 return;
@@ -30,9 +34,9 @@ public class ClienteSock4 {
                     break;
                 }
 
-                conexion.salida().println(opcion);
+                salida.println(opcion);
                 if (opcion.equals("5")) {
-                    System.out.println("Servidor dice: " + conexion.entrada().readLine());
+                    System.out.println("Servidor dice: " + entrada.readLine());
                     break;
                 }
 
@@ -47,31 +51,17 @@ public class ClienteSock4 {
                     if (segundoNumero == null) {
                         break;
                     }
-                    conexion.salida().println(primerNumero);
-                    conexion.salida().println(segundoNumero);
+                    salida.println(primerNumero);
+                    salida.println(segundoNumero);
                 }
 
-                String respuesta = conexion.entrada().readLine();
+                String respuesta = entrada.readLine();
                 if (respuesta == null) {
                     System.out.println("El servidor ha cerrado la conexion");
                     break;
                 }
                 System.out.println("Servidor dice: " + respuesta);
             }
-        }
-    }
-
-    private static CliConnection getCC() throws IOException {
-        Socket socket = new Socket("localhost", 4999);
-        BufferedReader entrada = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        PrintWriter salida = new PrintWriter(socket.getOutputStream(), true);
-        return new CliConnection(socket, entrada, salida);
-    }
-
-    private record CliConnection(Socket socket, BufferedReader entrada, PrintWriter salida) implements AutoCloseable {
-        @Override
-        public void close() throws IOException {
-            socket.close();
         }
     }
 }

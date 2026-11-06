@@ -1,6 +1,4 @@
-package ProgramacionRed.EjerciciosSockets.ProgSockets3;
-
-import ProgramacionRed.EjerciciosSockets.ProgSockets2.ServerSock2;
+package ProgramacionRed.EjerciciosSockets.TCP.ProgSockets3;
 
 import java.io.BufferedReader;
 import java.io.IOException;

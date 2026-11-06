@@ -1,4 +1,4 @@
-package ProgramacionRed.EjerciciosSockets.EjemploSocket1;
+package ProgramacionRed.EjerciciosSockets.TCP.EjemploSocket1;
 
 import java.io.*;
 import java.net.Socket;

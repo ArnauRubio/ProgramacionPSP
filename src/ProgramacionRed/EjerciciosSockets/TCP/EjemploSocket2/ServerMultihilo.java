@@ -1,4 +1,4 @@
-package ProgramacionRed.EjerciciosSockets.EjemploSocket2;
+package ProgramacionRed.EjerciciosSockets.TCP.EjemploSocket2;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

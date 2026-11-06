@@ -1,4 +1,4 @@
-package ProgramacionRed.EjerciciosSockets.ProgSockets5.sinHilos;
+package ProgramacionRed.EjerciciosSockets.TCP.ProgSockets5.sinHilos;
 
 import java.io.BufferedReader;
 import java.io.IOException;
