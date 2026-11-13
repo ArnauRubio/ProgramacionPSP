@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.net.MulticastSocket;
 
 public class ServerSockUDP7 {
-    public static void main(String[] args) throws IOException {
+    static void main(String[] args) throws IOException {
         try (MulticastSocket socket = new MulticastSocket();
              BufferedReader teclado = new BufferedReader(new InputStreamReader(System.in))) {
             System.out.println("Servidor multicast activo. Escribe mensajes para enviarlos al grupo:");

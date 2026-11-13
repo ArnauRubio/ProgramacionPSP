@@ -16,6 +16,8 @@ public class ClienteSockUDP7 {
                 DatagramPacket paquete = SocketUtils.crearPaqueteRecepcion();
                 socket.receive(paquete);
                 System.out.println("Mensaje recibido: " + SocketUtils.leerMensaje(paquete));
+                System.out.println(paquete.getAddress());
+                System.out.println(paquete.getSocketAddress() + ": " + SocketUtils.leerMensaje(paquete));
             }
         }
     }
