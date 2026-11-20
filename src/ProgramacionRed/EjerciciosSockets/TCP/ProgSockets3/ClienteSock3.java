@@ -22,6 +22,6 @@ public class ClienteSock3 {
         return cC;
     }
 
-    private record cliConnection(Socket socket, BufferedReader entrada, PrintWriter salida) {
+    public record cliConnection(Socket socket, BufferedReader entrada, PrintWriter salida) {
     }
 }
