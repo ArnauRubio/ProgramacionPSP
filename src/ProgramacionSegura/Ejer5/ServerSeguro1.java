@@ -13,8 +13,7 @@ import java.util.Base64;
 import javax.crypto.spec.SecretKeySpec;
 
 public class ServerSeguro1 {
-    private static final byte[] CLAVE_COMPARTIDA =
-            "0123456789ABCDEF".getBytes(StandardCharsets.UTF_8);
+    private static final byte[] CLAVE_COMPARTIDA = "0123456789ABCDEF".getBytes(StandardCharsets.UTF_8);
 
     static void main(String[] args) throws Exception {
         ServerSeguro1.servConnection sc = getSc();
@@ -37,8 +36,7 @@ public class ServerSeguro1 {
         System.out.println("Servidor esperando conexión....");
         Socket cliente = servidor.accept(); // Espera conexión
         System.out.println("Cliente conectado");
-        BufferedReader entrada = new BufferedReader(new
-                InputStreamReader(cliente.getInputStream()));
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
         PrintWriter salida = new PrintWriter(cliente.getOutputStream(), true);
         return new servConnection(servidor, cliente, entrada, salida);
     }
